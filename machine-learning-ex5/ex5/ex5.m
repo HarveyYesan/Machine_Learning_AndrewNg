@@ -218,3 +218,21 @@ end
 
 fprintf('Program paused. Press enter to continue.\n');
 pause;
+
+
+%%=========optional (upgrade) exercise: computing test error=========
+min = exp(30);
+index = 1;
+for i = 1 : length(lambda_vec)
+  if(min > abs(error_train(i) - error_val(i)))
+    min = abs(error_train(i) - error_val(i));
+    index = i;
+  end;
+end;
+lambda = lambda_vec(index);
+theta = trainLinearReg(X_poly, y, lambda);
+lambda_1 = 0;
+[error_test,grad]=linearRegCostFunction(X_poly_test, ytest, theta, lambda_1);
+fprintf('error_test: %f\n',error_test);
+fprintf('Program paused. Press enter to continue.\n');
+pause;
