@@ -236,3 +236,42 @@ lambda_1 = 0;
 fprintf('error_test: %f\n',error_test);
 fprintf('Program paused. Press enter to continue.\n');
 pause;
+
+
+%%==========optional (upgrade) exercise: plotting learning curve with randomly selected exmaples====
+lambda = 0.01;
+m = size(X,1);
+error_train = zeros(m,1);
+error_val = zeros(m,1);
+repeat = 50;
+for i = 1 : repeat
+  for j = 1 : m
+    %training set
+    rands = randperm(m,j);
+    X_rand = X_poly(rands, :);
+    y_rand = y(rands, :);
+    %cross validation set
+    rands = randperm(m,j);
+    X_rand_val = X_poly(rands, :);
+    y_rand_val = y(rands, :);
+
+    %train
+    theta = trainLinearReg(X_rand, y_rand, lambda);
+    [J, grad] = linearRegCostFunction(X_rand, y_rand, theta, 0);
+    [J_val, grad_val] = linearRegCostFunction(X_rand_val, y_rand_val, theta, 0);
+    error_train(j) = error_train(j) + J;
+    error_val(j) = error_val(j) + J_val;
+  end;
+end;
+
+%result
+error_train = error_train/repeat;
+error_test = error_test/repeat;
+
+%plot
+plot(1:m, error_train, 1:m, error_val);
+title(sprintf('Polynomial Regression Learning Curve (lambda = %f)', lambda));
+legend('Train', 'Cross Validation');
+xlabel('Number of training examples');
+ylabel('Error');
+axis([0 13 0 100]);
