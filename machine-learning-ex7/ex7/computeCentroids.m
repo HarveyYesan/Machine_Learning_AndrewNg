@@ -26,10 +26,13 @@ centroids = zeros(K, n);
 % Note: You can use a for-loop over the centroids to compute this.
 %
 
+X1 = X(find(idx==1),:);
+X2 = X(find(idx==2),:);
+X3 = X(find(idx==3),:);
 
-
-
-
+centroids(1,:) = mean(X1);
+centroids(2,:) = mean(X2);
+centroids(3,:) = mean(X3);
 
 
 

@@ -21,9 +21,14 @@ idx = zeros(size(X,1), 1);
 % Note: You can use a for-loop over the examples to compute this.
 %
 
-
-
-
+num = size(X, 1);
+for i = 1 : num
+  for j = 1 : K
+    eu_dist(j) = norm(X(i,:) - centroids(j,:))^2;
+  end
+  [minv, index] = min(eu_dist);
+  idx(i) = index;
+end
 
 
 
